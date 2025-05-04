@@ -19,7 +19,6 @@ def human_readable(value):
     else:
         return f"{value:,.2f}"
 
-
 st.set_page_config(layout="wide")
 def go_conclusion():
     st.session_state.page = 'conclusion'
