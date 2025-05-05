@@ -143,26 +143,26 @@ elif st.session_state.page == 'indicator':
                   st.markdown("### Why Bar Chart?")
                   st.markdown("Bar charts are great for comparing discrete values across categories — in this case, years. Construction output often fluctuates year by year, making this visual perfect for spotting those variations.")
 
-               elif indicator == 'General_government_expenditure':
-                    st.markdown("### Pie Chart: Government Expenditure Over Years")
+              elif indicator == 'General_government_expenditure':
+                  st.markdown("### Pie Chart: Government Expenditure Over Years")
 
-                    selected_years = data[data['Year'].isin([2000, 2010, 2020])]
-                    selected_years = selected_years[['Year', 'General_government_expenditure']].dropna()
+                  selected_years = data[data['Year'].isin([2000, 2010, 2020])]
+                  selected_years = selected_years[['Year', 'General_government_expenditure']].dropna()
 
-                    labels = selected_years['Year'].astype(str)
-                    values = selected_years['General_government_expenditure']
+                  labels = selected_years['Year'].astype(str)
+                  values = selected_years['General_government_expenditure']
 
-                    fig, ax = plt.subplots(figsize=(6, 6))
-                    ax.pie(values, labels=labels, autopct='%1.1f%%', startangle=90, colors=sns.color_palette("Set2"))
-                    ax.set_title(f"Government Expenditure Share Across Years ({country})")
+                  fig, ax = plt.subplots(figsize=(6, 6))
+                  ax.pie(values, labels=labels, autopct='%1.1f%%', startangle=90, colors=sns.color_palette("Set2"))
+                  ax.set_title(f"Government Expenditure Share Across Years ({country})")
 
-                    st.pyplot(fig)
-                    st.subheader("Description")
-                    st.markdown(
-                        f"This pie chart shows how <b>Government Expenditure</b> was distributed across the years <b>2000</b>, <b>2010</b>, and <b>2020</b> for <b>{country}</b>. "
-                        "It helps highlight how spending has evolved or concentrated over time.",
-                        unsafe_allow_html=True
-                    )
+                  st.pyplot(fig)
+                  st.subheader("Description")
+                  st.markdown(
+                      f"This pie chart shows how <b>Government Expenditure</b> was distributed across the years <b>2000</b>, <b>2010</b>, and <b>2020</b> for <b>{country}</b>. "
+                      "It helps highlight how spending has evolved or concentrated over time.",
+                      unsafe_allow_html=True
+                  )
 
               else:
                   st.markdown("### Line Chart: Trend Over Time")
