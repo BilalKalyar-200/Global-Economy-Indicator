@@ -103,7 +103,6 @@ if st.session_state.page == 'home':
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
 
-
 elif st.session_state.page == 'indicator':
     st.button("⬅ Back", on_click=go_home)
 
@@ -144,16 +143,26 @@ elif st.session_state.page == 'indicator':
                   st.markdown("### Why Bar Chart?")
                   st.markdown("Bar charts are great for comparing discrete values across categories — in this case, years. Construction output often fluctuates year by year, making this visual perfect for spotting those variations.")
 
-              elif indicator == 'General_government_expenditure':
-                  st.markdown("### Multiple Bar Chart: Government Expenditure vs GNI")
-                  selected_years = data[data['Year'].isin([2000, 2010, 2020])]
-                  df_multi = pd.melt(selected_years, id_vars=['Year'], value_vars=['GNI', 'General_government_expenditure'], var_name='Variable', value_name='Value')
-                  sns.barplot(data=df_multi, x='Year', y='Value', hue='Variable', ax=ax)
-                  st.pyplot(fig)
-                  st.subheader("Description")
-                  st.markdown(f"This multiple bar chart compares <b>GNI</b> and <b>Government Expenditure</b> for <b>{country}</b> in 2000, 2010, and 2020. It helps visually understand the relationship between national income and government spending.<br>", unsafe_allow_html=True)
-                  st.markdown("### Why Multiple Bar Chart?")
-                  st.markdown("When comparing two indicators side by side, grouped bar charts clearly differentiate between categories. This is ideal for showing how government spending scales with the economy over time.")
+               elif indicator == 'General_government_expenditure':
+                    st.markdown("### Pie Chart: Government Expenditure Over Years")
+
+                    selected_years = data[data['Year'].isin([2000, 2010, 2020])]
+                    selected_years = selected_years[['Year', 'General_government_expenditure']].dropna()
+
+                    labels = selected_years['Year'].astype(str)
+                    values = selected_years['General_government_expenditure']
+
+                    fig, ax = plt.subplots(figsize=(6, 6))
+                    ax.pie(values, labels=labels, autopct='%1.1f%%', startangle=90, colors=sns.color_palette("Set2"))
+                    ax.set_title(f"Government Expenditure Share Across Years ({country})")
+
+                    st.pyplot(fig)
+                    st.subheader("Description")
+                    st.markdown(
+                        f"This pie chart shows how <b>Government Expenditure</b> was distributed across the years <b>2000</b>, <b>2010</b>, and <b>2020</b> for <b>{country}</b>. "
+                        "It helps highlight how spending has evolved or concentrated over time.",
+                        unsafe_allow_html=True
+                    )
 
               else:
                   st.markdown("### Line Chart: Trend Over Time")
@@ -287,7 +296,6 @@ elif st.session_state.page == 'indicator':
                   Q1 = np.percentile(data[indicator], 25)
                   Q2 = np.percentile(data[indicator], 50)
                   Q3 = np.percentile(data[indicator], 75)
-
 
                   #Continuous Probability Distribution
                   # This section displays interactive controls to input lower and upper bounds.
